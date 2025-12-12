@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>おばんざいアゲハ食堂</title>
+    <meta name="description" content="瀬戸内海に囲まれた自然との調和を感じる場所" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"Zen Old Mincho"', '"Noto Serif JP"', 'serif'],
+              sans: ['"Helvetica Neue"', 'Arial', 'sans-serif'],
+            },
+            colors: {
+              primary: '#5d6d39', // Organic green
+              secondary: '#8c8172', // Earthy brown
+              background: '#f9f9f7', // Off-white paper texture
+              dark: '#333333',
+              gray: {
+                light: '#f4f4f4',
+                medium: '#999999',
+              }
+            },
+            letterSpacing: {
+              widest: '.2em',
+            },
+            animation: {
+              'fade-in-up': 'fadeInUp 1s ease-out forwards',
+              'fade-in': 'fadeIn 1.5s ease-out forwards',
+            },
+            keyframes: {
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        font-family: "Zen Old Mincho", serif;
+        background-color: #fcfcfc;
+        color: #333;
+      }
+      /* Custom scrollbar for webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #999;
+      }
+      .vertical-text {
+        writing-mode: vertical-rl;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -112,7 +112,12 @@ const App: React.FC = () => {
         <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4 py-8 md:p-4 z-10">
           <FadeIn delay={500}>
             <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold leading-relaxed mb-4 md:mb-6 whitespace-pre-wrap tracking-widest text-white [text-shadow:_2px_2px_8px_rgba(0,0,0,0.8),_0_0_20px_rgba(0,0,0,0.5)]">
-              {TEXT.hero.main}
+              <span className="block sm:hidden">
+                自然と季節が奏でる、小鉢のひと皿。{'\n'}からだが喜ぶ、美しい調和を。
+              </span>
+              <span className="hidden sm:block">
+                {TEXT.hero.main}
+              </span>
             </h2>
           </FadeIn>
           <FadeIn delay={1000}>

@@ -2,24 +2,33 @@ import { NavItem } from './types';
 
 export const NAV_ITEMS: NavItem[] = [
   { id: '1', num: '01', label: 'Concept', link: '#concept' },
-  { id: '2', num: '02', label: 'Visual', link: '#visual' },
-  { id: '3', num: '03', label: 'Menu', link: '#menu' },
+  { id: '2', num: '02', label: 'Menu', link: '#menu' },
+  { id: '3', num: '03', label: 'Visual', link: '#visual' },
   { id: '4', num: '04', label: 'Access', link: '#access' },
 ];
 
 export const IMAGES = {
   hero1: '/images/hero/2024-12-08.webp',
   hero2: '/images/hero/unnamed%20%281%29.webp',
-  hero3: '/images/hero/unnamed.webp',
+  hero3: '/images/hero/スクリーンショット 2025-12-14 15.16.16.png',
   concept: '/images/concept/560066245_17893657488341202_8428270583581779952_n.jpg',
   menu: '/images/menu/2024-12-08%20(1).webp',
+  menuPdf: '/images/menu/アゲハ食堂様メニュー.pdf',
+  menuImage: '/images/menu/menu.png',
+  // サイクリングドリンクセクション - トップ画像
+  cyclingDrinkTop: '/images/menu/cycling-drink-top.jpg',
+  // サイクリングドリンク - 商品画像
+  cyclingDrinkGreenSmoothie: '/images/menu/cycling-drink-green-smoothie.jpg',
+  cyclingDrinkLemonSoda: '/images/menu/cycling-drink-lemon-soda.jpg',
+  cyclingDrinkBananaShake: '/images/menu/cycling-drink-banana-shake.jpg',
   access: '/images/access/innnoshima1-1280.jpg',
-  visual1: '/images/visual/unnamed%20%285%29.webp',
-  visual2: '/images/visual/unnamed%20%283%29.webp',
-  visual3: '/images/visual/2024-12-08.webp',
-  visual4: '/images/visual/unnamed%20%287%29.webp',
+  visual1: '/images/visual/unnamed%20(5).webp',
+  visual2: '/images/visual/スクリーンショット 2025-12-14 15.23.05.png',
+  visual3: '/images/visual/DSC04467.png',
+  visual4: '/images/visual/DSC04494.png',
   visual5: '/images/visual/unnamed%20(1).webp',
-  visual6: '/images/visual/unnamed.webp',
+  visual6: '/images/visual/スクリーンショット 2025-12-14 15.39.22.png',
+  articleImage: '/images/articles/article.jpg',
 };
 
 export const TEXT = {

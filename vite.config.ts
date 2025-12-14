@@ -8,6 +8,14 @@ export default defineConfig(({ mode }) => {
       server: {
         port: 3001,
         host: '0.0.0.0',
+        proxy: {
+          '/api/calendar': {
+            target: 'https://script.google.com',
+            changeOrigin: true,
+            secure: true,
+            rewrite: (path) => '/macros/s/AKfycbyIumjypDi86ZVdnCqjDQlfk5nyeRSuosofbRNPNvSpr7pXmkhIipqtnqf5iEckHWMBuw/exec',
+          },
+        },
       },
       plugins: [react()],
       define: {

@@ -53,6 +53,15 @@
         font-family: "Zen Old Mincho", serif;
         background-color: #fcfcfc;
         color: #333;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* タッチ操作の最適化 */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      button, a {
+        touch-action: manipulation;
       }
       /* Custom scrollbar for webkit */
       ::-webkit-scrollbar {

@@ -27,29 +27,57 @@ const Calendar: React.FC = () => {
     return day === 0 ? 6 : day - 1;
   };
 
-  // 日付をYYYY-MM-DD形式に変換（ISO形式から）
-  const formatDateFromISO = (isoString: string): string => {
-    if (!isoString) return '';
+  // 日付をYYYY-MM-DD形式に変換（様々な形式に対応）
+  const formatDateFromISO = (dateValue: string | Date): string => {
+    if (!dateValue) return '';
+    
     try {
-      // ISO形式の文字列から直接日付部分を抽出（タイムゾーンの影響を避ける）
-      if (isoString.includes('T')) {
-        const datePart = isoString.split('T')[0];
-        // YYYY-MM-DD形式であることを確認
-        if (/^\d{4}-\d{2}-\d{2}$/.test(datePart)) {
-          return datePart;
+      // 既にYYYY-MM-DD形式の文字列の場合
+      if (typeof dateValue === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateValue)) {
+        return dateValue;
+      }
+      
+      // YYYY/MM/DD形式の文字列の場合（例: "2025/12/17"）
+      if (typeof dateValue === 'string' && /^\d{4}\/\d{2}\/\d{2}$/.test(dateValue)) {
+        return dateValue.replace(/\//g, '-');
+      }
+      
+      // ISO形式の文字列の場合（例: "2025-12-17T15:00:00.000Z"）
+      if (typeof dateValue === 'string' && dateValue.includes('T')) {
+        // UTC時間として解釈されるため、日本時間（JST = UTC+9）に変換
+        const date = new Date(dateValue);
+        // UTC時間を取得して、日本時間に変換（UTC+9時間）
+        const jstDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
+        const year = jstDate.getUTCFullYear();
+        const month = String(jstDate.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(jstDate.getUTCDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+      
+      // Dateオブジェクトの場合
+      if (dateValue instanceof Date) {
+        const year = dateValue.getFullYear();
+        const month = String(dateValue.getMonth() + 1).padStart(2, '0');
+        const day = String(dateValue.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+      
+      // その他の文字列形式の場合
+      if (typeof dateValue === 'string') {
+        const date = new Date(dateValue);
+        if (!isNaN(date.getTime())) {
+          // 日本時間として解釈（ローカル時間を使用）
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const day = String(date.getDate()).padStart(2, '0');
+          return `${year}-${month}-${day}`;
         }
       }
-      // Dateオブジェクトを使用する場合（フォールバック）
-      const date = new Date(isoString);
-      // ローカル時間で取得（タイムゾーンの影響を考慮）
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
+      
+      return String(dateValue);
     } catch (error) {
-      console.error('日付変換エラー:', error, isoString);
-      // ISO形式でない場合はそのまま返す
-      return isoString;
+      console.error('日付変換エラー:', error, dateValue);
+      return String(dateValue);
     }
   };
 
@@ -129,13 +157,15 @@ const Calendar: React.FC = () => {
     }
     return () => {
       // クリーンアップ
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.overflow = '';
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      if (!selectedEvent) {
+        const scrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        if (scrollY) {
+          window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        }
       }
     };
   }, [selectedEvent]);
@@ -150,11 +180,10 @@ const Calendar: React.FC = () => {
     
     if (selectedEvent) {
       window.addEventListener('keydown', handleEscape);
+      return () => {
+        window.removeEventListener('keydown', handleEscape);
+      };
     }
-    
-    return () => {
-      window.removeEventListener('keydown', handleEscape);
-    };
   }, [selectedEvent]);
 
   // 日付文字列をYYYY-MM-DD形式に変換
@@ -404,16 +433,15 @@ const Calendar: React.FC = () => {
       {selectedEvent && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 sm:p-6"
-          onClick={(e) => {
-            // 背景をクリックした場合のみ閉じる
-            if (e.target === e.currentTarget) {
-              setSelectedEvent(null);
-            }
+          onClick={() => {
+            setSelectedEvent(null);
           }}
         >
           <div 
             className="relative w-full max-w-md bg-white rounded-sm overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[85vh]"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
           >
             <div className="flex justify-between items-center p-4 sm:p-6 border-b border-gray-200">
               <h3 className="text-lg sm:text-xl font-serif">
@@ -421,11 +449,13 @@ const Calendar: React.FC = () => {
               </h3>
               <button
                 onClick={(e) => {
+                  e.preventDefault();
                   e.stopPropagation();
                   setSelectedEvent(null);
                 }}
-                className="w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-gray-100 rounded transition-colors touch-manipulation"
+                className="w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-gray-100 rounded transition-colors touch-manipulation z-10"
                 aria-label="閉じる"
+                type="button"
               >
                 <X className="w-6 h-6 sm:w-5 sm:h-5" />
               </button>

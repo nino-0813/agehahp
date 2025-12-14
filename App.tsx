@@ -113,7 +113,7 @@ const App: React.FC = () => {
           <FadeIn delay={500}>
             <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold leading-relaxed mb-4 md:mb-6 whitespace-pre-wrap tracking-widest text-white [text-shadow:_2px_2px_8px_rgba(0,0,0,0.8),_0_0_20px_rgba(0,0,0,0.5)]">
               <span className="block sm:hidden">
-                自然と季節が奏でる、小鉢のひと皿。{'\n'}からだが喜ぶ、美しい調和を。
+                自然と季節が奏でる、{'\n'}小鉢のひと皿。からだが喜ぶ、{'\n'}美しい調和を。
               </span>
               <span className="hidden sm:block">
                 {TEXT.hero.main}
